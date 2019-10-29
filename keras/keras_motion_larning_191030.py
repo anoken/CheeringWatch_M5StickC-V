@@ -17,13 +17,11 @@ from sklearn.metrics import confusion_matrix
 import itertools
 import seaborn as sns
 
-# 学習用のデータを作る.
 image_list = []
 label_list = []
 
 LABELS = []
 label = 0
-
 
 filenames = os.listdir("train")
 for dir in sorted(filenames):
@@ -50,62 +48,42 @@ print(image_list)
 X_train, X_test, y_train, y_test = train_test_split(image_list, Y, test_size=0.20)
 
 
-# モデルを生成してニューラルネットを構築
+#CNN Model
+
 model = Sequential()
 input_shape=(8, 8, 3)
 model.add(ZeroPadding2D(padding=((1, 1), (1, 1)), input_shape=input_shape))
 model.add(Conv2D(32, (3, 3),input_shape=input_shape))
 model.add(Activation('relu'))
 model.add(MaxPooling2D(pool_size=(2, 2), padding=("same")))
-
-#model.add(ZeroPadding2D(padding=((1, 1), (1, 1)), input_shape=input_shape))
-#model.add(Conv2D(64, (3, 3)))
-#model.add(Activation('relu'))
-#model.add(MaxPooling2D(pool_size=(2, 2), padding=("same")))
-
 model.add(Dropout(0.25))
-
 model.add(Flatten())
 model.add(Dense(128, activation='relu'))
-
 model.add(Dropout(0.5))
 model.add(Dense(label,activation='softmax'))
-
 opt = Adam(lr=0.001)
 model.compile(loss="categorical_crossentropy", optimizer=opt, metrics=["accuracy"])
 
-
-
 history=model.fit(X_train, y_train, nb_epoch=50)
-
-#print(image_list)
-
 
 
 def plot_graph(history):
 	epochs = range(len(history.history['acc']))
-
 	plt.plot(epochs,history.history['acc'], marker='.', label='acc')
-#	plt.plot(epochs,history.history['val_acc'], marker='.', label='val_acc')
 	plt.autoscale()
 	plt.title('model accuracy&loss')
 	plt.grid()
 	plt.xlabel('epoch')
 	plt.ylabel('accuracy')
 	plt.legend(loc='best')
-#	plt.savefig('./acc_graph.png')
-#	plt.show()
-#	plt.clf()
 	plt.plot(epochs,history.history['loss'], marker='.', label='loss')
-#	plt.plot(epochs,history.history['val_loss'], marker='.', label='val_loss')
 	plt.autoscale()
-#	plt.title('model loss')
 	plt.grid()
 	plt.xlabel('epoch')
 	plt.ylabel('loss')
 	plt.legend(loc='best')
 	plt.savefig('./loss_graph.png')
-#	plt.show()
+	plt.show()
 	
 plot_graph(history)
 
@@ -114,7 +92,6 @@ plot_graph(history)
 score = model.evaluate(X_test, y_test, verbose=1)
 print('loss=', score[0])
 print('accuracy=', score[1])
-
 
 #confusion_matrix
 pred_y = model.predict(X_test.astype(np.float32))
@@ -129,7 +106,6 @@ plt.xlabel('Predicted label')
 plt.savefig('./confusion_matrix.png')
 #plt.show();
 
-
 model.save('my_model.h5')
 
 converter = tf.lite.TFLiteConverter.from_keras_model_file('my_model.h5')
@@ -139,8 +115,5 @@ open('my_mbnet.tflite', "wb").write(tflite_model)
 import subprocess
 subprocess.run(['./ncc/ncc','my_model.tflite','my_model.kmodel','-i','tflite','-o',
 'k210model','--dataset','images'])
-
-
-
 
 
