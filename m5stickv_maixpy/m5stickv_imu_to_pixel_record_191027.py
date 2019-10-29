@@ -8,7 +8,6 @@ from machine import I2C
 i2c = I2C(I2C.I2C0, freq=100000, scl=28, sda=29)
 devices = i2c.scan()
 print(devices)
-
 lcd.init()
 
 # LCD Backlight
@@ -118,7 +117,6 @@ while(True):
     imu_Image.set_pixel(w, h, accel_array)
     width=imu_Image.width()
 
-
     # IMU Data_View
     w=(cnt+1)%w_size
     h=int((cnt+1)/w_size)
@@ -150,8 +148,6 @@ while(True):
             fname="cnt_str"+mode_str+"_"+cnt_str+".jpg"
             print(fname)
             imu_Image.save(fname, quality=99)
-
-
 
     if but_a.value() == 0 and but_a_pressed == 0:
         but_a_pressed=1
