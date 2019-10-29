@@ -130,14 +130,14 @@ plt.savefig('./confusion_matrix.png')
 #plt.show();
 
 
-model.save('my_mbnet.h5')
+model.save('my_model.h5')
 
-converter = tf.lite.TFLiteConverter.from_keras_model_file('my_mbnet.h5')
+converter = tf.lite.TFLiteConverter.from_keras_model_file('my_model.h5')
 tflite_model = converter.convert()
 open('my_mbnet.tflite', "wb").write(tflite_model)
 
 import subprocess
-subprocess.run(['./ncc/ncc','my_mbnet.tflite','my_mbnet.kmodel','-i','tflite','-o',
+subprocess.run(['./ncc/ncc','my_model.tflite','my_model.kmodel','-i','tflite','-o',
 'k210model','--dataset','images'])
 
 
