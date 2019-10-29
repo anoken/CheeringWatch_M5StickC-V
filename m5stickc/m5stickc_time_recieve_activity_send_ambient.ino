@@ -1,12 +1,10 @@
 // Copyright (c) 2019 aNoken
 // https://twitter.com/anoken2017
 // Arduino IDE compile code
-// M5StickC_Watch_Contest
 
 #include <M5StickC.h>
 #include <WiFi.h>
-#include "Ambient.h" // Ambientのヘッダーをインクルード
-
+#include "Ambient.h" // Ambient Header
 //RTC Define
 RTC_TimeTypeDef RTC_TimeStruct;
 RTC_DateTypeDef RTC_DateStruct;
@@ -35,9 +33,9 @@ int data = -1;
 
 
 WiFiClient client;
-Ambient ambient; // Ambientオブジェクトを定義
-unsigned int channelId = 00000 ; // AmbientのチャネルID
-const char* writeKey = "000000000000000"; // ライトキー
+Ambient ambient; // Ambient
+unsigned int channelId = 00000 ; // Ambient
+const char* writeKey = "000000000000000"; // 
 
 void setup() {
   M5.begin();
