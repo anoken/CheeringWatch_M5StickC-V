@@ -20,8 +20,6 @@ print(os.listdir())
 
 
 #################### Speaker
-
-##スピーカの初期化
 fm.register(board_info.SPK_SD, fm.fpioa.GPIO0)
 spk_sd=GPIO(GPIO.GPIO0, GPIO.OUT)
 spk_sd.value(1)
@@ -30,7 +28,6 @@ fm.register(board_info.SPK_BCLK,fm.fpioa.I2S0_SCLK)
 fm.register(board_info.SPK_LRCLK,fm.fpioa.I2S0_WS)
 wav_dev = I2S(I2S.DEVICE_0)
 
-##wavファイルの再生
 def play_wav(fname):
     player = audio.Audio(path = fname)
     player.volume(70)
@@ -46,8 +43,6 @@ def play_wav(fname):
         elif ret==0:
             break
     player.finish()
-
-
 
 ####################LCD_draw_face
 x_zero=240//2
@@ -90,14 +85,12 @@ def draw_face(img,theta,cnt):
     img.draw_line(res[0], res[1], res[2], res[3], color = (0, 0, 0),            thickness = 15)
 
 ####################
-
 # LCD Backlight
 AXP192_ADDR=0x34
 Backlight_ADDR=0x91
 level=50
 val = (level+7) << 4
 i2c.writeto_mem(AXP192_ADDR, Backlight_ADDR,int(val))
-
 ####################
 
 # IMU6866 define
@@ -285,7 +278,4 @@ while(True):
 
     if but_b.value() == 1 and but_b_pressed == 1:
         but_b_pressed=0
-
-
-    #TimeDetec
 
