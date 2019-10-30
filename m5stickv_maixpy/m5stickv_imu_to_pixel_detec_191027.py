@@ -257,14 +257,24 @@ while(True):
         data_str=str(max_index)+"\n"
         uart_Port.write(data_str)
 
-    if class_time[4]>10:
+    if class_time[0]>20:
+        play_wav("voice/okite.wav")
+        class_time[0]=0
+
+    if class_time[1]>20:
+        play_wav("voice/sumaho.wav")
+        class_time[1]=0
+
+    if class_time[2]>20:
         play_wav("voice/ganbare.wav")
-        class_time[4]=0
-
-
+        class_time[2]=0
+        
+    if class_time[3]>20:
+        play_wav("voice/ganbare.wav")
+        class_time[3]=0
+        
     if but_a.value() == 0 and but_a_pressed == 0:
         but_a_pressed=1
-
 
     if but_a.value() == 1 and but_a_pressed == 1:
         but_a_pressed=0
@@ -278,4 +288,3 @@ while(True):
 
     if but_b.value() == 1 and but_b_pressed == 1:
         but_b_pressed=0
-
