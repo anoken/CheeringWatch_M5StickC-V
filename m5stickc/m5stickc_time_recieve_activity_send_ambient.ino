@@ -1,4 +1,4 @@
-// Copyright (c) 2019 aNoken
+// Copyright (c) 2020 aNoken
 // https://twitter.com/anoken2017
 // Arduino IDE compile code
 
