@@ -1,4 +1,4 @@
-## Copyright (c) 2019 aNoken
+## Copyright (c) 2023 aNoken
 ## https://twitter.com/anoken2017
 
 import sensor, image, time,lcd,machine
